@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="icon" href="./favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <meta name="description" content="Witty meta tag.">
+    <meta name="author" content="Check Wump Out Channel">
+    <meta property="og:title" name="Title" content="Check Wump Out Channel"/>
+    <meta property="og:description" name="Description"
+          content="Witty meta tag."/>
+    <meta property="og:image" name="Image" content="https://i.imgur.com/63thuqc.png"/>
+    <meta property="og:url" name="URL" content="https://clubwumpus.github.io/checkwumpout/"/>
+	<title>Check Wump Out Channel</title>
+
+	<link type="text/css" href="style.css" rel="stylesheet" />
+	<style>
+	body {
+     background-image:    url(img/mainBG.png);
+	}
+	</style>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+	<script src="alertify/alertify.js"></script>
+	<link rel="stylesheet" href="alertify/css/alertify.css"></script>
+	<link rel="stylesheet" href="alertify/css/cwo-notif.css"></script>
+</head>
+
+<script>
+function polyAudio(path, copies) {
+  var elems = [], index = 0
+  for (var i = 0; i < 16; i++) elems.push(new Audio(path))
+  return {
+    play: function() {
+      if (window.chrome) elems[index].load()
+      elems[index].play()
+      index = (index + 1) % copies
+    }
+  }
+}
+
+var timer;
+var snd = polyAudio("bgm/click.mp3", 10);
+var hover = polyAudio("bgm/hover.mp3", 10);
+var alert = new Audio("bgm/alert.mp3");
+
+function playSound() {
+    document.getElementById("fade").setAttribute("id", "fadeout");
+    document.getElementById("sendlink").setAttribute("class", "sendStatic");
+    document.getElementById("viewlink").setAttribute("class", "viewStatic");
+    document.getElementById("backbutton").setAttribute("id", "backbuttonStatic");
+	document.getElementById('bgm').pause()
+snd.play();
+};
+
+function preload(arrayOfImages) {
+    $(arrayOfImages).each(function(){
+        $('<img/>')[0].src = this;
+    });
+}
+
+function setClocks() {
+preload([
+    'img/wumpSend.png',
+    'img/wumpSendH.png',
+    'img/wumpView.png',
+    'img/wumpViewH.png'
+]);
+  document.getElementById("loader").style.display = "block";
+	document.getElementById('loadingMusic').play()
+    timer = setTimeout(showPage, 1200);
+		localStorage.setItem("firstload", "1");	
+}
+
+function loadPage() {
+    var first = localStorage.getItem("firstload");
+	if (first != "1") {
+		document.getElementById('loadingMusic').pause()
+	alert.play();
+  document.getElementById("loader").style.display = "none";
+		alertify.alert("<p class='text-y'>■ Check Wump Out!</p><br>Welcome to the Check Wump Out channel, where you can show off your very own memes in the Meme Gallery!  <br><br>To submit a meme, go to the Submit Meme page and click on ''Submit Meme'', then fill out the form.  To see other's memes, go to the View Wumps page.<br><br><p class='text-g'>■ Submission Rules</p><br> Please note that you are not allowed to submit memes that: <br><br>-Were taken from another user without credit or permission<br>-Contain NSFW content<br>-Are reposts or direct reuploads from Wump Shop<br>-Have nothing to do with Wumpus or Discord<br>-Are intended to harass, offend, or shock").set({transition:'slide','resizable':true}).resizeTo('60%','80%').set('onok', function(closeEvent){ setClocks();} );
+	} else {
+	setClocks();
+	}
+}
+
+function showPage() {
+	document.getElementById('loadingMusic').pause()
+  document.getElementById("loader").style.display = "none";
+   document.getElementById("bar").style.display = "block";
+  document.getElementById("menu").style.display = "block";
+}
+
+function sendButton() {
+playSound();
+	setTimeout(function(){
+  document.getElementById("loader").style.display = "block";
+	document.getElementById('loadingMusic').play();
+    window.location.href = './send.html';
+	}, 1200);
+};
+
+function viewButton() {
+playSound();
+	setTimeout(function(){
+  document.getElementById("loader").style.display = "block";
+	document.getElementById('loadingMusic').play();
+    window.location.href = './view.html';
+	}, 1200);
+};
+
+function backClick() {
+playSound();
+	setTimeout(function(){
+  document.getElementById("loader").style.display = "block";
+	document.getElementById('loadingMusic').play();
+    window.location.href = 'https://clubwumpus.github.io/wumpmenu/';
+	}, 1200);
+};
+</script>
+
+<body onload="loadPage()" style="margin:0;">
+<div id="fade"></div>
+<div id="loader" class="loader"><img src="./img/loading.gif"></div>
+	<div id="bar" class="bar">
+		<p>♦ Check Wump Out Channel ♦</p>
+		</div>
+<div id="menu" class="menu">
+	<div id="viewbutton">
+		<a class="view" id="viewlink" href="#" onclick="viewButton();" onmouseover="hover.play();"> </a>
+	</div>
+	<div id="sendbutton">
+	<a class="send" id="sendlink" href="#" onclick="sendButton();"onmouseover="hover.play();"> </a>
+	</div>
+			<div>
+	<a class="backbutton" id="backbutton" href="#" onclick="backClick();" onmouseover="hover.play();"> </a>
+	</div>
+	</div>
+</body>
+<audio
+  src="./bgm/menu.mp3" loop=1 id="bgm" auto autoplay>
+</audio>
+<audio src="./bgm/loading.mp3" loop=1 id="loadingMusic" auto autoplay></audio>
+</html>

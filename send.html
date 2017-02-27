@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="icon" href="./favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <meta name="description" content="Witty meta tag.">
+    <meta name="author" content="Check Wump Out Channel">
+    <meta property="og:title" name="Title" content="Check Wump Out Channel"/>
+    <meta property="og:description" name="Description"
+          content="Witty meta tag."/>
+    <meta property="og:image" name="Image" content="https://i.imgur.com/63thuqc.png"/>
+    <meta property="og:url" name="URL" content="https://clubwumpusteam.github.io/checkwumpout/"/>
+	<title>Check Wump Out Channel</title>
+	
+
+	<link type="text/css" href="styleSend.css" rel="stylesheet" />
+	<style>
+	body {
+     background-image:    url(img/send.png);
+	}
+	</style>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="alertify/alertify.js"></script>
+	<link rel="stylesheet" href="alertify/css/alertify.css"></script>
+	<link rel="stylesheet" href="alertify/css/cwo-orange.css"></script>
+</head>
+
+<script>
+function polyAudio(path, copies) {
+  var elems = [], index = 0
+  for (var i = 0; i < 16; i++) elems.push(new Audio(path))
+  return {
+    play: function() {
+      if (window.chrome) elems[index].load()
+      elems[index].play()
+      index = (index + 1) % copies
+    }
+  }
+}
+
+var timer;
+var snd = polyAudio("bgm/click3.mp3", 10);
+var hover = polyAudio("bgm/hover.mp3", 10);
+var click = new Audio("bgm/click2.mp3");
+
+function playSound() {
+    document.getElementById("fade").setAttribute("id", "fadeout");
+    document.getElementById("button").setAttribute("class", "buttonfadein");
+	    document.getElementById("button2").setAttribute("class", "buttonfadein");
+	    document.getElementById("backbutton").setAttribute("id", "backbuttonStatic");
+	document.getElementById('bgm').pause()
+snd.play();
+};
+
+function setClocks() {
+	document.getElementById('loadingMusic').play()
+    timer = setTimeout(showPage, 1000);
+}
+
+function showPage() {
+	document.getElementById('loadingMusic').pause()
+  document.getElementById("loader").style.display = "none";
+   document.getElementById("button").style.display = "block";
+  document.getElementById("menu").style.display = "block";
+}
+
+function backClick() {
+playSound();
+hover.volume = 0;
+	setTimeout(function(){
+  document.getElementById("loader").style.display = "block";
+	document.getElementById('loadingMusic').play();
+    window.location.href = './index.html';
+	}, 1200);
+};
+
+function openForm() {
+click.play();
+		alertify.alert("<iframe src='https://docs.google.com/forms/d/1M3AoTNg8Adhw8fOKgxWm7Tn5FzjJRhQIXJ1Tg7lsyJg/viewform' width='99%' height='99%'></iframe>").set('resizable',true).resizeTo(734,617);;
+}
+
+function openEula() {
+click.play();
+		alertify.alert("<div id=\"center\" >You are not allowed to submit memes that: <br><br>-Were taken from another user without credit or permission<br>-Contain NSFW content<br>-Are reposts or direct reuploads from Wump Shop<br>-Have nothing to do with Wumpus or Discord<br>-Are intended to harass, offend, or shock</div>").set('resizable',true).resizeTo(534,317);;
+}
+</script>
+
+<body onload="setClocks()" style="margin:0;">
+<div id="fade"></div>
+<div id="loader" class="loader"><img src="./img/loading.gif"></div>
+<div id="menu" class="menu">
+<div class="button" id="button" onmouseover="hover.play();">
+	<a href="#" onclick="openEula();" onmouseover="hover.play();">Submission Rules</a>
+	</div>
+<div class="button" id="button2">
+	<a href="#" onclick="openForm();" onmouseover="hover.play();">Submit Meme</a>
+	</div>
+			<div id="backbutton">
+	<a class="backbutton" id="backbutton" href="#" onclick="backClick();" onmouseover="hover.play();"> </a>
+	</div>
+	</div>
+</body>
+<audio
+  src="./bgm/send.mp3" loop=1 id="bgm" auto autoplay>
+</audio>
+<audio src="./bgm/loading.mp3" loop=1 id="loadingMusic" auto autoplay></audio>
+</html>
